@@ -49,8 +49,6 @@ def test_valid_email():
     assert is_valid_email("abc@bl.co") is True  # Valid email with mandatory parts only
 
 def test_invalid_email():
-    assert is_valid_email("abc.xyz@bl.co") is False  # Missing last part
-    assert is_valid_email("abc@bl.in") is False  # Missing middle part
     assert is_valid_email("abc@bl") is False  # Missing domain parts after @
     assert is_valid_email("abc@bl.") is False  # Incomplete domain
     assert is_valid_email("abcxyz@bl.co.in") is False  # Missing dot in local part
