@@ -1,5 +1,13 @@
+'''
+    @Author: Dhananjay Kumar
+    @Date: 04-11-2024
+    @Last Modified by: Dhananjay Kumar
+    @Last Modified time: 04-11-2024
+    @Title : Pytest for User Registration
+'''
+
 import pytest
-from user import is_valid_first_name, is_valid_last_name  # Import functions from user.py
+from user import is_valid_first_name, is_valid_last_name, is_valid_email  # Import functions from user.py
 
 # First name test cases
 def test_valid_first_name():
@@ -34,6 +42,26 @@ def test_invalid_last_name():
 def test_edge_case_last_names():
     assert is_valid_last_name("K") is False  # Single character name
     assert is_valid_last_name("Kim") is True  # Valid 3-letter last name
+
+# Email test cases
+def test_valid_email():
+    assert is_valid_email("abc.xyz@bl.co.in") is True  # Valid email with all parts
+    assert is_valid_email("abc@bl.co") is True  # Valid email with mandatory parts only
+
+def test_invalid_email():
+    assert is_valid_email("abc.xyz@bl.co") is False  # Missing last part
+    assert is_valid_email("abc@bl.in") is False  # Missing middle part
+    assert is_valid_email("abc@bl") is False  # Missing domain parts after @
+    assert is_valid_email("abc@bl.") is False  # Incomplete domain
+    assert is_valid_email("abcxyz@bl.co.in") is False  # Missing dot in local part
+    assert is_valid_email("abc.@bl.co.in") is False  # Extra dot at the end of local part
+    assert is_valid_email("abc..xyz@bl.co.in") is False  # Double dots in local part
+    assert is_valid_email("@bl.co.in") is False  # Missing local part
+    assert is_valid_email("abc@.co.in") is False  # Missing domain name after @
+
+def test_edge_case_emails():
+    assert is_valid_email("a.b@bl.co.in") is True  # Minimal local part with dots
+    assert is_valid_email("abc@bl.co.in") is True  # Email without optional middle local part
 
 # Run the test cases
 if __name__ == "__main__":
