@@ -71,6 +71,7 @@ def test_invalid_mobile():
 def test_edge_case_mobile():
     assert is_valid_mobile("91 0000000000") is True  # Edge case with all zeros, still valid format
 
+
 # Run the test cases
 if __name__ == "__main__":
     pytest.main()
