@@ -51,7 +51,10 @@ def is_valid_email(email):
     try:
         if not isinstance(email, str):
             raise ValueError("Input must be a string.")
-        email_pattern = r'^[a-zA-Z0-9]+(\.[a-zA-Z0-9]+)?@[a-zAZ0-9]+\.[a-zA-Z]{2,3}(\.[a-zA-Z]{2})?$'
+        
+        # Email pattern updated to validate standard email format only
+        email_pattern = r'^[a-zA-Z0-9]+(\.[a-zA-Z0-9]+)?@[a-zA-Z0-9]+\.[a-zA-Z]{2,3}(\.[a-zA-Z]{2})?$'
+        
         is_valid = bool(re.match(email_pattern, email))
         if is_valid:
             logger.info(f"Valid email entered: {email}")
@@ -79,13 +82,6 @@ def is_valid_mobile(mobile):
         return False
 
 # Function to validate password
-import re
-from logger import logger_init  
-
-# Initialize the logger
-logger = logger_init("name_email_mobile_validation")
-
-# Function to validate password
 def is_valid_password(password):
     """
     Check if the password is valid.
@@ -101,16 +97,14 @@ def is_valid_password(password):
             raise ValueError("Input must be a string.")
         
         # Password pattern: Minimum 8 characters, at least 1 uppercase letter, at least 1 numeric digit,
-        # and at least 1 special character.
+        # and exactly 1 special character
         password_pattern = r'^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z0-9!@#$%^&*()_+]{8,}$'
         
         # Check if it has exactly 1 special character
-        special_char_count = len(re.findall(r'[!@#$%^&*()_+]', password))
-        if special_char_count != 1:
-            logger.warning(f"Invalid password entered: {password} (must contain exactly 1 special character, found {special_char_count})")
+        if len(re.findall(r'[!@#$%^&*()_+]', password)) != 1:
+            logger.warning(f"Invalid password entered: {password} (must contain exactly 1 special character)")
             return False
         
-        # General password validation
         is_valid = bool(re.match(password_pattern, password))
         
         if is_valid:
@@ -122,7 +116,6 @@ def is_valid_password(password):
     except Exception as e:
         logger.error(f"Error occurred while validating password: {e}")
         return False
-
 
 def main():
     try:
