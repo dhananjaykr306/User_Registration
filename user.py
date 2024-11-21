@@ -4,19 +4,12 @@
     @Last Modified by: Dhananjay Kumar
     @Last Modified time: 08-11-2024
     @Title : Check user valid name, email, and mobile number, and phone no.,password 8 characters,atleast one uppercase atleast one numeric digit,
+            has exactly 1 special character
 '''
+
 
 import re
 from logger import logger_init  
-
-'''
-    @Author: Dhananjay Kumar
-    @Date: 08-11-2024
-    @Last Modified by: Dhananjay Kumar
-    @Last Modified time: 07-11-2024
-    @Title : password validation
-'''
-
 
 # Initialize the logger
 logger = logger_init("name_email_mobile_validation")
@@ -58,7 +51,7 @@ def is_valid_email(email):
     try:
         if not isinstance(email, str):
             raise ValueError("Input must be a string.")
-        email_pattern = r'^[a-zA-Z0-9]+(\.[a-zA-Z0-9]+)?@[a-zA-Z0-9]+\.[a-zA-Z]{2,3}(\.[a-zA-Z]{2})?$'
+        email_pattern = r'^[a-zA-Z0-9]+(\.[a-zA-Z0-9]+)?@[a-zAZ0-9]+\.[a-zA-Z]{2,3}(\.[a-zA-Z]{2})?$'
         is_valid = bool(re.match(email_pattern, email))
         if is_valid:
             logger.info(f"Valid email entered: {email}")
@@ -86,6 +79,13 @@ def is_valid_mobile(mobile):
         return False
 
 # Function to validate password
+import re
+from logger import logger_init  
+
+# Initialize the logger
+logger = logger_init("name_email_mobile_validation")
+
+# Function to validate password
 def is_valid_password(password):
     """
     Check if the password is valid.
@@ -100,8 +100,17 @@ def is_valid_password(password):
         if not isinstance(password, str):
             raise ValueError("Input must be a string.")
         
-        # Password pattern: Minimum 8 characters, at least 1 uppercase letter, and at least 1 numeric digit
-        password_pattern = r'^(?=.*[A-Z])(?=.*\d)[A-Za-z0-9!@#$%^&*()_+]{8,}$'
+        # Password pattern: Minimum 8 characters, at least 1 uppercase letter, at least 1 numeric digit,
+        # and at least 1 special character.
+        password_pattern = r'^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z0-9!@#$%^&*()_+]{8,}$'
+        
+        # Check if it has exactly 1 special character
+        special_char_count = len(re.findall(r'[!@#$%^&*()_+]', password))
+        if special_char_count != 1:
+            logger.warning(f"Invalid password entered: {password} (must contain exactly 1 special character, found {special_char_count})")
+            return False
+        
+        # General password validation
         is_valid = bool(re.match(password_pattern, password))
         
         if is_valid:
@@ -114,13 +123,14 @@ def is_valid_password(password):
         logger.error(f"Error occurred while validating password: {e}")
         return False
 
+
 def main():
     try:
         first_name = input("Enter your first name: ")
         last_name = input("Enter your last name: ")
         email = input("Enter your email: ")
         mobile = input("Enter your mobile number (format: '91 9919819801'): ")
-        password = input("Enter your password (minimum 8 characters, at least 1 uppercase letter, at least 1 numeric digit): ")
+        password = input("Enter your password (minimum 8 characters, at least 1 uppercase letter, at least 1 numeric digit, exactly 1 special character): ")
 
         # Validate first name, last name, email, mobile number, and password
         first_name_valid = is_valid_first_name(first_name)
