@@ -1,5 +1,13 @@
+'''
+    @Author: Dhananjay Kumar
+    @Date: 08-11-2024
+    @Last Modified by: Dhananjay Kumar
+    @Last Modified time: 08-11-2024
+    @Title : pytest for user registration user valid name, email, and mobile number, and phone no.
+'''
+
 import pytest
-from user import is_valid_first_name, is_valid_last_name, is_valid_email, is_valid_mobile  # Import functions from employee module
+from user import is_valid_first_name, is_valid_last_name, is_valid_email, is_valid_mobile, is_valid_password  # Import functions from employee module
 
 # First name test cases
 def test_valid_first_name():
@@ -71,6 +79,26 @@ def test_invalid_mobile():
 def test_edge_case_mobile():
     assert is_valid_mobile("91 0000000000") is True  # Edge case with all zeros, still valid format
 
+# Password test cases
+def test_valid_password():
+    assert is_valid_password("password123") is True  # Valid password with alphanumeric characters
+    assert is_valid_password("Password123!") is True  # Valid password with special characters
+    assert is_valid_password("12345678") is True  # Valid password with only digits
+
+def test_invalid_password():
+    assert is_valid_password("pass") is False  # Less than 8 characters
+    assert is_valid_password("12345") is False  # Less than 8 characters
+    assert is_valid_password("1234567") is False  # Less than 8 characters
+    assert is_valid_password("password") is False  # Only lowercase letters, no special characters or digits
+    assert is_valid_password("PASSWORD123") is False  # Only uppercase letters, no special characters
+    assert is_valid_password("!@#$%^&*") is False  # Special characters only, less than 8 characters
+    assert is_valid_password("password@") is False  # Only 7 characters, not enough
+    assert is_valid_password("short") is False  # Less than 8 characters
+
+def test_edge_case_passwords():
+    assert is_valid_password("Shaurya@123") is True  # Password with uppercase, lowercase, digits, and special characters
+    assert is_valid_password("a1!b2@c3#") is True  # Complex password with numbers and special characters
+    assert is_valid_password("Shaurya123") is True
 
 # Run the test cases
 if __name__ == "__main__":
