@@ -4,7 +4,7 @@
     @Last Modified by: Dhananjay Kumar
     @Last Modified time: 08-11-2024
     @Title : pytest for user registration user valid name, email, and mobile number, and phone no password len 8 charcaters, Should have atleast one uppercase,
-    one lowercase, one digit ,has exactly 1 special character.
+             one lowercase, one digit ,has exactly 1 special character in one function.
 '''
 
 import pytest
