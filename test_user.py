@@ -100,7 +100,6 @@ def test_edge_case_passwords():
     assert is_valid_password("a1!b2@c3#") is True  # Complex password with numbers and special characters
     assert is_valid_password("Shaurya123") is True
 
-
 # Run the test cases
 if __name__ == "__main__":
     pytest.main()
