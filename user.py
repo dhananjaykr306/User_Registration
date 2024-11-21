@@ -3,7 +3,7 @@
     @Date: 08-11-2024
     @Last Modified by: Dhananjay Kumar
     @Last Modified time: 08-11-2024
-    @Title : Check user valid name, email, and mobile number, and phone no.
+    @Title : Check user valid name, email, and mobile number, and phone no.,password 8 characters,atleast one uppercase,
 '''
 
 import re
@@ -91,8 +91,8 @@ def is_valid_password(password):
         if not isinstance(password, str):
             raise ValueError("Input must be a string.")
         
-        # Password pattern: Minimum 8 characters
-        password_pattern = r'^[A-Za-z0-9!@#$%^&*()_+]{8,}$'
+        # Password pattern: Minimum 8 characters and at least one uppercase letter
+        password_pattern = r'^(?=.*[A-Z])[A-Za-z0-9!@#$%^&*()_+]{8,}$'
         is_valid = bool(re.match(password_pattern, password))
         
         if is_valid:
@@ -111,7 +111,7 @@ def main():
         last_name = input("Enter your last name: ")
         email = input("Enter your email: ")
         mobile = input("Enter your mobile number (format: '91 9919819801'): ")
-        password = input("Enter your password (minimum 8 characters): ")
+        password = input("Enter your password (minimum 8 characters, at least 1 uppercase letter): ")
 
         # Validate first name, last name, email, mobile number, and password
         first_name_valid = is_valid_first_name(first_name)
