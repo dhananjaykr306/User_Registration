@@ -4,7 +4,7 @@
     @Last Modified by: Dhananjay Kumar
     @Last Modified time: 08-11-2024
     @Title : Check user valid name, email, and mobile number, and phone no.,password 8 characters,atleast one uppercase atleast one numeric digit,
-            has exactly 1 special character
+            has exactly 1 special character one function
 '''
 
 
